@@ -1,13 +1,10 @@
 <template>
 <q-page class="q-mt-md q-ml-md column">
-<!--
-  <ShotInput v-for="repNum in numReps" :key="repNum" :myLabel="'Made Rep ' + repNum" ref="inputFields">
-  </ShotInput>
--->
-  <div v-for="rep of numReps" :key="rep" class="q-ma-xs">
-    <span class="font-weight-bold q-mr-sm" style="font-size: 1.2em">Rep {{ rep }}</span>
-    <ButtonInputDialog :numInputs="makeable" ref="inputFields" :repNum="rep"></ButtonInputDialog>
-  </div>
+  <!-- <div v-for="rep of numReps" :key="rep" class="q-ma-xs"> -->
+    <!-- <span class="font-weight-bold q-mr-sm" style="font-size: 1.2em">Rep {{ rep }}</span> -->
+    <!-- <ButtonInputDialog :numInputs="makeable" ref="inputFields" :repNum="rep" :buttonColor="shotInputColorArray[rep]" @menu-show="menuShow(rep)" @menu-hide="menuHide"></ButtonInputDialog> -->
+  <!-- </div> -->
+  <RepeatedInputs></RepeatedInputs>
   <q-btn
    to="/"
    label="Save These Reps"
@@ -22,16 +19,20 @@
 </template>
 
 <script>
-import ButtonInputDialog from '../components/ButtonInputDialog'
+// import ButtonInputDialog from '../components/ButtonInputDialog'
+import RepeatedInputs from '../components/RepeatedInputs'
 export default {
   name: 'PageIndex',
   components: {
-    ButtonInputDialog
+    // ButtonInputDialog
+    RepeatedInputs
   },
   data () {
     return {
       madeCount: 0,
-      madeArr: new Array(this.numReps)
+      madeArr: new Array(this.numReps),
+      buttonActiveColor: 'orange-9',
+      buttonInActiveColor: 'grey-12'
     }
   },
   computed: {
@@ -51,28 +52,33 @@ export default {
       return [false, false]
     },
     makeable () {
-      console.log('in makeable(), shotsPerRep is: ', this.shotsPerRep)
       let x = 0
       let makeableArr = Array(this.shotsPerRep + 1)
       for (x = 0; x < makeableArr.length; x++) {
         makeableArr[x] = x
       }
-      console.log('makeableArr is ' + makeableArr)
       return makeableArr
+    },
+    shotMenuActive () {
+      if (!this.$store.getters['shotMenu/getShotInputMenuActive']) {
+        return 'orange-8'
+      } else {
+        return 'blue-8'
+      }
+    },
+    fieldRefsRef () {
+      return this.$refs.inputFields
     }
   },
   methods: {
     saveReps () {
-      console.log('saveReps got called')
-      let shotArr = []
-      this.$refs.inputFields.forEach(function (elem) {
-        shotArr.push(elem.val)
-      })
-      this.$store.commit('repset/setRepSetShotsMadeArr', shotArr)
+      this.$store.commit('repset/setRepSetShotsMadeArr', this.$store.getters['shotMenu/getShotsMadeArr'])
       this.$store.commit('repset/setRepSetEndTime')
       this.$store.commit('session/addRepSet', this.$store.getters['repset/getRepSetData'])
-      console.log('after commit, repSetData is ' + JSON.stringify(this.$store.getters['repset/getRepSetData']))
+      // console.log('after commit, repSetData is ' + JSON.stringify(this.$store.getters['repset/getRepSetData']))
       console.log('after commit, sessionData is ' + JSON.stringify(this.$store.getters['session/getSessionData']))
+      this.$store.commit('repset/setRepSetShotsMadeArr', null)
+      this.$store.commit('shotMenu/setShotsMadeArr', { 'arr': [] })
     }
   }
 }

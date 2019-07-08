@@ -94,31 +94,22 @@ export default {
     startSession () {
       this.$store.commit('session/startSession')
       console.log('sessionId now is ' + this.$store.getters['session/getSessionId'])
-      console.log('sessionStartTime now is ' + this.$store.getters['session/getSessionStartTime'])
     },
     endSession () {
       this.$store.commit('repset/endRepSet')
       this.$store.commit('session/endSession')
-      console.log('sessionId now is ' + this.$store.getters['session/getSessionId'])
-      console.log('sessionStartTime now is ' + this.$store.getters['session/getSessionStartTime'])
-      console.log('sessionEndTime now is ' + this.$store.getters['session/getSessionEndTime'])
     },
     setShotType (val) {
-      console.log('setShotType has been called with ' + val)
       this.$store.commit('repset/setRepSetShotType', val)
-      console.log('The shot type val passed was ' + val)
-      console.log('ShotType in store is ' + this.$store.getters['repset/getRepSetShotType'])
     },
     setNumReps (val) {
-      console.log('setNumReps has been called with ' + val)
       this.$store.commit('repset/setRepSetNumReps', val)
-      console.log('Num Reps passed was ' + val)
-      console.log('Num Reps in store is ' + this.$store.getters['repset/getRepSetNumReps'])
+      for (let x = 0; x < val; x++) {
+        this.$store.commit('shotMenu/setShotInputButtonColors', { 'idx': x, 'color': 'orange-9' })
+      }
     },
     setShotsPerRep (val) {
       this.$store.commit('repset/setRepSetShotsPerRep', val)
-      console.log('Shots per rep passed was ' + val)
-      console.log('Shots per rep in store is ' + this.$store.getters['repset/getRepSetShotsPerRep'])
     },
     startSessionTrack () {
       this.$store.commit('repset/setRepSetId')

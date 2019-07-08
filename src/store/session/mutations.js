@@ -7,7 +7,6 @@ export function startSession (state) {
 
 export function endSession (state) {
   state.session.endTime = new Date()
-  console.log('mock after session finish, setting all to null')
   state.session.sessionId = null
   state.session.startTime = null
   state.session.endTime = null

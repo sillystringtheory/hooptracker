@@ -39,7 +39,6 @@ export function setRepSetShotType (state, val) {
 }
 
 export function setRepSetNumReps (state, val) {
-  console.log('In setRepSetNumReps mutation, value was ' + val)
   state.repSetNumReps = val
 }
 
