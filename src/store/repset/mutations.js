@@ -49,3 +49,14 @@ export function setRepSetShotsPerRep (state, val) {
 export function setRepSetShotsMadeArr (state, arr) {
   state.repSetShotsMadeArr = arr
 }
+
+export function reInitRepSetData (state) {
+  state.repSetId = null
+  state.repSetSessionId = null
+  state.repSetStartTime = null
+  state.repSetEndTime = null
+  state.repSetShotType = null
+  state.repSetNumReps = null
+  state.repSetShotsPerRep = null
+  state.repSetShotsMadeArr = null
+}

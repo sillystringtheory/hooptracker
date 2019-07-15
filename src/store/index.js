@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+import appconfig from './appconfig'
 import session from './session'
 import repset from './repset'
 import shotMenu from './shotMenu'
@@ -15,6 +16,7 @@ Vue.use(Vuex)
 export default function (/* { ssrContext } */) {
   const Store = new Vuex.Store({
     modules: {
+      appconfig,
       session,
       repset,
       shotMenu

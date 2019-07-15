@@ -92,10 +92,10 @@ export default {
   },
   methods: {
     startSession () {
-      this.$store.commit('session/startSession')
-      console.log('sessionId now is ' + this.$store.getters['session/getSessionId'])
+      this.$store.dispatch('session/startSessionAction', { 'vm': this })
     },
     endSession () {
+      this.$store.dispatch('repset/endRepSetAction')
       this.$store.commit('repset/endRepSet')
       this.$store.commit('session/endSession')
     },
@@ -104,9 +104,12 @@ export default {
     },
     setNumReps (val) {
       this.$store.commit('repset/setRepSetNumReps', val)
+      let arr = []
       for (let x = 0; x < val; x++) {
-        this.$store.commit('shotMenu/setShotInputButtonColors', { 'idx': x, 'color': 'orange-9' })
+        arr[x] = true
       }
+      let obj = { 'arr': arr }
+      this.$store.commit('shotMenu/setShotInputButtonStateArr', obj)
     },
     setShotsPerRep (val) {
       this.$store.commit('repset/setRepSetShotsPerRep', val)
@@ -115,7 +118,7 @@ export default {
       this.$store.commit('repset/setRepSetId')
       this.$store.commit('repset/setRepSetSessionId', this.$store.getters['session/getSessionId'])
       this.$store.commit('repset/setRepSetStartTime')
-      console.log('repset now contains ' + JSON.stringify(this.$store.getters['repset/getRepSetData']))
+      // console.log('repset now contains ' + JSON.stringify(this.$store.getters['repset/getRepSetData']))
     }
   }
 }
