@@ -93,11 +93,13 @@ export default {
   methods: {
     startSession () {
       this.$store.dispatch('session/startSessionAction', { 'vm': this })
+      console.log('after startSessionAction dispatch, session is ' + JSON.stringify(this.$store.getters['session/getSessionData']))
     },
     endSession () {
-      this.$store.dispatch('repset/endRepSetAction')
-      this.$store.commit('repset/endRepSet')
-      this.$store.commit('session/endSession')
+      this.$store.dispatch('session/endSessionAction', { 'vm': this })
+      // this.$store.dispatch('repset/endRepSetAction')
+      // this.$store.commit('repset/endRepSet')
+      // this.$store.commit('session/endSessionAction')
     },
     setShotType (val) {
       this.$store.commit('repset/setRepSetShotType', val)
