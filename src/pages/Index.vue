@@ -93,34 +93,27 @@ export default {
   methods: {
     startSession () {
       this.$store.dispatch('session/startSessionAction', { 'vm': this })
-      console.log('after startSessionAction dispatch, session is ' + JSON.stringify(this.$store.getters['session/getSessionData']))
+      this.$store.dispatch('repset/initRepSetAction', { 'vm': this })
     },
     endSession () {
-      this.$store.dispatch('session/endSessionAction', { 'vm': this })
       // this.$store.dispatch('repset/endRepSetAction')
       // this.$store.commit('repset/endRepSet')
-      // this.$store.commit('session/endSessionAction')
+      this.$store.dispatch('session/endSessionAction', { 'vm': this })
     },
     setShotType (val) {
-      this.$store.commit('repset/setRepSetShotType', val)
+      this.$store.dispatch('repset/setShotTypeAction', val)
     },
     setNumReps (val) {
-      this.$store.commit('repset/setRepSetNumReps', val)
-      let arr = []
-      for (let x = 0; x < val; x++) {
-        arr[x] = true
-      }
-      let obj = { 'arr': arr }
-      this.$store.commit('shotMenu/setShotInputButtonStateArr', obj)
+      // this action also resets thte state of the shotMenu/setShotInputButtonStateArr
+      this.$store.dispatch('repset/setRepSetNumRepsAction', { 'vm': this, 'numReps': val })
     },
     setShotsPerRep (val) {
-      this.$store.commit('repset/setRepSetShotsPerRep', val)
+      this.$store.dispatch('repset/setRepSetShotsPerRepAction', { 'vm': this, 'shotsPerRep': val })
     },
     startSessionTrack () {
-      this.$store.commit('repset/setRepSetId')
-      this.$store.commit('repset/setRepSetSessionId', this.$store.getters['session/getSessionId'])
-      this.$store.commit('repset/setRepSetStartTime')
-      // console.log('repset now contains ' + JSON.stringify(this.$store.getters['repset/getRepSetData']))
+      this.$store.dispatch('repset/setRepSetIdAction', { 'vm': this })
+      this.$store.dispatch('repset/setRepSetSessionIdAction', { 'vm': this, 'sessId': this.$store.getters['session/getSessionId'] })
+      this.$store.dispatch('repset/setRepSetStartTimeAction', { 'vm': this, 'startTime': new Date() })
     }
   }
 }

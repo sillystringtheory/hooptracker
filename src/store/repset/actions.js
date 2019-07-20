@@ -1,7 +1,55 @@
-/*
-export function someAction (context) {
+const uuidv4 = require('uuid/v4')
+
+export function initRepSetAction (context, { vm }) {
+  context.commit('setRepSetId', null)
+  context.commit('setRepSetSessionId', null)
+  context.commit('setRepSetStartTime', null)
+  context.commit('setRepSetEndTime', null)
+  context.commit('setRepSetShotType', null)
+  context.commit('setRepSetNumReps', null)
+  context.commit('setRepSetShotsPerRep', null)
+  context.commit('setRepSetShotsMadeArr', [])
 }
-*/
+
+export function startRepSetAction (context, { vm, shotType, numReps, shotsPerRep }) {
+  context.commit('setRepSetId', uuidv4())
+  context.commit('setRepSetSessionId', vm.$store.getters['session/getSessionId'])
+  context.commit('setRepSetStartTime', new Date())
+  context.commit('setRepSetShotType', shotType)
+  context.commit('setRepSetNumReps', numReps)
+  context.commit('setRepSetShotsPerRep', shotsPerRep)
+}
+
+export function setShotTypeAction (context, { vm, shotType }) {
+  context.commit('setRepSetShotType', shotType)
+}
+
+export function setRepSetNumRepsAction (context, { vm, numReps }) {
+  context.commit('setRepSetNumReps', numReps)
+  let arr = []
+  for (let x = 0; x < numReps; x++) {
+    arr[x] = true
+  }
+  let obj = { 'arr': arr }
+  vm.$store.commit('shotMenu/setShotInputButtonStateArr', obj)
+}
+
+export function setRepSetShotsPerRepAction (context, { vm, shotsPerRep }) {
+  context.commit('setRepSetShotsPerRep', shotsPerRep)
+}
+
+export function setRepSetIdAction (context, { vm }) {
+  context.commit('setRepSetId', uuidv4())
+}
+
+export function setRepSetSessionIdAction (context, { vm, sessId }) {
+  context.commit('setRepSetSessionId', sessId)
+}
+
+export function setRepSetStartTimeAction (context, { vm, startTime }) {
+  context.commit('setRepSetStartTime', startTime)
+}
+
 export function postRepSetData (context, { vm }) {
   let errorState = false
   context.commit('setRepSetShotsMadeArr', vm.$store.getters['shotMenu/getShotsMadeArr'])
