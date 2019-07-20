@@ -1,37 +1,17 @@
-const uuidv4 = require('uuid/v4')
-
-export function startRepSet (state, shotType, shotsPerRep) {
-  setRepSetId()
-  setRepSetSessionId()
-  setRepSetStartTime()
-  setRepSetShotType(shotType)
-  setRepSetShotsPerRep(shotsPerRep)
-}
-
-export function endRepSet (state) {
-  state.repSetId = null
-  state.repSetSessionId = null
-  state.repSetStartTime = null
-  state.repSetEndTime = null
-  state.repSetShotType = null
-  state.repSetShotsPerRep = null
-  state.repSetNumReps = null
-}
-
-export function setRepSetId (state) {
-  state.repSetId = uuidv4()
+export function setRepSetId (state, val) {
+  state.repSetId = val
 }
 
 export function setRepSetSessionId (state, val) {
   state.repSetSessionId = val
 }
 
-export function setRepSetStartTime (state) {
-  state.repSetStartTime = new Date()
+export function setRepSetStartTime (state, val) {
+  state.repSetStartTime = val
 }
 
-export function setRepSetEndTime (state) {
-  state.repSetEndTime = new Date()
+export function setRepSetEndTime (state, val) {
+  state.repSetEndTime = val
 }
 
 export function setRepSetShotType (state, val) {
@@ -49,7 +29,28 @@ export function setRepSetShotsPerRep (state, val) {
 export function setRepSetShotsMadeArr (state, arr) {
   state.repSetShotsMadeArr = arr
 }
+// helper functions about to be exported to actions
 
+export function startRepSet (state, shotType, shotsPerRep) {
+  setRepSetId()
+  setRepSetSessionId()
+  setRepSetStartTime()
+  setRepSetShotType(shotType)
+  setRepSetShotsPerRep(shotsPerRep)
+}
+
+export function endRepSet (state) {
+  state.repSetId = null
+  state.repSetSessionId = null
+  state.repSetStartTime = null
+  state.repSetEndTime = null
+  state.repSetShotType = null
+  state.repSetNumReps = null
+  state.repSetShotsPerRep = null
+  state.repSetNumReps = []
+}
+
+// Has been renamed to initRepSetAction in actions
 export function reInitRepSetData (state) {
   state.repSetId = null
   state.repSetSessionId = null
@@ -58,5 +59,5 @@ export function reInitRepSetData (state) {
   state.repSetShotType = null
   state.repSetNumReps = null
   state.repSetShotsPerRep = null
-  state.repSetShotsMadeArr = null
+  state.repSetShotsMadeArr = []
 }

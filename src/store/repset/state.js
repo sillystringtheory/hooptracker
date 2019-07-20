@@ -6,5 +6,5 @@ export default {
   repSetShotType: null,
   repSetNumReps: null,
   repSetShotsPerRep: null,
-  repSetShotsMadeArr: null
+  repSetShotsMadeArr: []
 }
