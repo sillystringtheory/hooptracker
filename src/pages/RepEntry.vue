@@ -72,15 +72,7 @@ export default {
   },
   methods: {
     saveReps () {
-      // this.$store.commit('repset/setRepSetShotsMadeArr', this.$store.getters['shotMenu/getShotsMadeArr'])
-      // this.$store.commit('repset/setRepSetEndTime')
-      // this.$store.commit('session/addRepSet', this.$store.getters['repset/getRepSetData'])
-      // console.log('after commit, repSetData is ' + JSON.stringify(this.$store.getters['repset/getRepSetData']))
-      // console.log('after commit, sessionData is ' + JSON.stringify(this.$store.getters['session/getSessionData']))
-      // this.$axios.post(this.appBaseDataURL + '/savereps', this.$store.getters['repset/getRepSetData'])
       this.$store.dispatch('repset/postRepSetData', { 'vm': this })
-      // this.$store.commit('repset/setRepSetShotsMadeArr', null)
-      // this.$store.commit('shotMenu/setShotsMadeArr', { 'arr': [] })
     }
   }
 }
