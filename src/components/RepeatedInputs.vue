@@ -27,16 +27,7 @@ export default {
   },
   methods: {
     bclick (idx) {
-      let stateArr = []
-      for (let x = 0; x < this.instNumReps; x++) {
-        if (x !== idx) {
-          stateArr[x] = false
-        } else {
-          stateArr[x] = true
-        }
-      }
-      let obj = { 'arr': stateArr }
-      this.$store.commit('shotMenu/setShotInputButtonStateArr', obj)
+      this.$store.dispatch('shotMenu/setShotInputButtonStateArrAction', { 'vm': this, 'idx': idx })
     },
     buttonColor (idx) {
       if (this.inputButtonStateArr[idx] === true) {
@@ -46,20 +37,10 @@ export default {
       }
     },
     reactivate () {
-      let x = Array(this.instNumReps).fill(true)
-      let obj = { 'arr': x }
-      this.$store.commit('shotMenu/setShotInputButtonStateArr', obj)
+      this.$store.dispatch('shotMenu/setShotInputButtonStateArrAction', { 'vm': this })
     },
     updateVal (rep, choice) {
-      let obj = { 'arr': [] }
-      for (let x = 0; x < this.instNumReps; x++) {
-        if (x !== rep) {
-          obj.arr[x] = this.shotsMadeArr[x]
-        } else {
-          obj.arr[x] = choice
-        }
-      }
-      this.$store.commit('shotMenu/setShotsMadeArr', obj)
+      this.$store.dispatch('shotMenu/setShotsMadeAction', { 'vm': this, 'rep': rep, 'choice': choice })
     }
   },
   computed: {
@@ -72,21 +53,14 @@ export default {
       return [...Array(this.instShotsPerRep + 1).keys()]
     },
     inputButtonStateArr () {
-      if (this.$store.getters['shotMenu/getShotInputButtonStateArr'].length === 0) {
-        let arr = []
-        for (let x = 0; x < this.instNumReps; x++) {
-          arr[x] = true
-        }
-        let obj = { 'arr': arr }
-        this.$store.commit('shotMenu/setShotInputButtonStateArr', obj)
+      if ((this.$store.getters['shotMenu/getShotInputButtonStateArr'].length === 0) || (this.$store.getters['shotMenu/getShotInputButtonStateArr'].length === undefined)) {
+        this.$store.dispatch('shotMenu/setShotInputButtonStateArrAction', { 'vm': this })
       }
       return this.$store.getters['shotMenu/getShotInputButtonStateArr']
     },
     shotsMadeArr () {
-      if (this.$store.getters['shotMenu/getShotsMadeArr'].length === 0) {
-        let obj = { 'arr': [] }
-        obj.arr = Array(this.instNumReps).fill(0)
-        this.$store.commit('shotMenu/setShotsMadeArr', obj)
+      if ((this.$store.getters['shotMenu/getShotsMadeArr'].length === 0) || (this.$store.getters['shotMenu/getShotsMadeArr'].length === undefined)) {
+        this.$store.dispatch('shotMenu/setShotsMadeAction', { 'vm': this })
       }
       return this.$store.getters['shotMenu/getShotsMadeArr']
     }

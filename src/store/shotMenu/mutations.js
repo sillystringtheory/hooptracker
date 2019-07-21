@@ -21,10 +21,10 @@ export function setShotInputDisabledButtonColor (state, obj) {
   state.shotInputDisabledButtonColor = obj.color
 }
 
-export function setShotInputButtonStateArr (state, obj) {
-  state.shotInputButtonStateArr = obj.arr
+export function setShotInputButtonStateArr (state, arr) {
+  state.shotInputButtonStateArr = arr
 }
 
-export function setShotsMadeArr (state, obj) {
-  state.shotsMadeArr = obj.arr
+export function setShotsMadeArr (state, arr) {
+  state.shotsMadeArr = arr
 }
