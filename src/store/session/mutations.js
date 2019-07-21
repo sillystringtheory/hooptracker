@@ -15,6 +15,10 @@ export function setSessionRepSets (state, arr) {
   state.session.repSets = arr
 }
 
+export function addRepSet (state, obj) {
+  state.session.repSets.push(obj)
+}
+
 // this function expects minutes as its input
 // it's default value is 120 minutes
 export function setSessionTimeOut (state, val) {
